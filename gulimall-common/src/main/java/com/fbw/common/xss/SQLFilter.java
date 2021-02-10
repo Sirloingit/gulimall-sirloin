@@ -8,9 +8,8 @@
 
 package com.fbw.common.xss;
 
-import io.renren.common.exception.RRException;
+import com.fbw.common.utils.RRException;
 import org.apache.commons.lang.StringUtils;
-
 /**
  * SQL过滤
  *
