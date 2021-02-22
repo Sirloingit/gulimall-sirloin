@@ -10,3 +10,35 @@ spring:
           uri: https://www.qq.com
           predicates:
             - Query=url,qq
+
+        - id: product_route
+          uri: lb://gulimall-product #要先注册到 注册中心\配置中心
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+
+        - id: member_route
+          uri: lb://gulimall-member #要先注册到 注册中心\配置中心
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+
+        - id: third-party
+          uri: lb://gulimall-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>.*), /$\{segment}
+
+        - id: admin_route
+          uri: lb://renren-fast #负载均衡到指定服务 先默认把所有请求都转到renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /renren-fast/$\{segment}
+
+## 前端项目 请求地址/api前缀 都路由到renren-fast
+## http://localhost:88/api/captcha.jpg  应该转到 http://localhost:8080/renren-fast/captcha.jpg
+## 但实际上转到了http://localhost:8080/api/captcha.jpg 需要请求路径重写功能

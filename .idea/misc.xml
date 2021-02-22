@@ -5,6 +5,7 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/gulimall-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/guliamll-third-party/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

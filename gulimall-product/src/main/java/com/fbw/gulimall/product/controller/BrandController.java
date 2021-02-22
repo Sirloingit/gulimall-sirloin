@@ -1,10 +1,17 @@
 package com.fbw.gulimall.product.controller;
 
+import java.net.BindException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.fbw.common.JSRGroup.AddGroup;
+import com.fbw.common.JSRGroup.UpdateGroup;
+import org.bouncycastle.cms.bc.BcKEKRecipientInfoGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +23,7 @@ import com.fbw.gulimall.product.service.BrandService;
 import com.fbw.common.utils.PageUtils;
 import com.fbw.common.utils.R;
 
+import javax.validation.Valid;
 
 
 /**
@@ -24,6 +32,9 @@ import com.fbw.common.utils.R;
  * @author sirloin
  * @email sunlightcs@gmail.com
  * @date 2021-02-03 21:53:40
+ *          JSR303数据校验
+ *
+ *
  */
 @RestController
 @RequestMapping("product/brand")
@@ -37,6 +48,7 @@ public class BrandController {
     @RequestMapping("/list")
     //@RequiresPermissions("product:brand:list")
     public R list(@RequestParam Map<String, Object> params){
+
         PageUtils page = brandService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -59,7 +71,15 @@ public class BrandController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:brand:save")
-    public R save(@RequestBody BrandEntity brand){
+    public R save(@Validated(value = {AddGroup.class}) @RequestBody BrandEntity brand /*, BindingResult bindingResult*/){ //@Valid开启校验功能
+//        if(bindingResult.hasErrors()){
+//            Map<String, String> map = new HashMap<>();
+//            bindingResult.getFieldErrors().forEach((item) -> {
+//                map.put(item.getField(), item.getDefaultMessage());
+//            });
+//            return R.error(10011,"校验出错").put("data",map);
+//        }
+
 		brandService.save(brand);
 
         return R.ok();
@@ -70,8 +90,8 @@ public class BrandController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("product:brand:update")
-    public R update(@RequestBody BrandEntity brand){
-		brandService.updateById(brand);
+    public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand){
+		brandService.updateDetail(brand);//多表同步更新
 
         return R.ok();
     }

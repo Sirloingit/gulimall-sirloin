@@ -2,19 +2,33 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://121.199.73.72:3307/gulimall_pms
+    url: jdbc:mysql://121.199.73.72:3307/gulimall_pms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.jdbc.Driver
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.31.31:8848
+        server-addr: localhost:8848
+
+    alicloud:
+      access-key: LTAI4G5aaAyWWi9LrZ6jrR1M
+      secret-key: tJTmEIhhCZKF1jVPSH5a0EIbISEOlk
+      oss:
+        endpoint: oss-cn-shanghai.aliyuncs.com
+
+
   application:
     name: gulimall-product
+
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml  #默认位置
   global-config:
     db-config:
       id-type: auto #配置主键自增
+      logic-delete-value: 1 #逻辑已删除值
+      logic-not-delete-value: 0 #逻辑未删除值
 server:
-  port: 10000
+  port: 10001
+logging:
+  level:
+    com.fbw.gulimall: debug
