@@ -27,8 +27,8 @@ public class OSSController {
     public R policy(){
         //这里可以用配置文件完成
 
-        String accessId = "LTAI4G5aaAyWWi9LrZ6jrR1M"; // 请填写您的AccessKeyId。
-        String accessKey = "tJTmEIhhCZKF1jVPSH5a0EIbISEOlk"; // 请填写您的AccessKeySecret。
+        String accessId = ""; // 请填写您的AccessKeyId。
+        String accessKey = ""; // 请填写您的AccessKeySecret。
         String endpoint = "oss-cn-shanghai.aliyuncs.com"; // 请填写您的 endpoint。
         String bucket = "gulimall-sirloin"; // 请填写您的 bucketname 。
         String host = "https://" + bucket + "." + endpoint; // host的格式为 bucketname.endpoint
